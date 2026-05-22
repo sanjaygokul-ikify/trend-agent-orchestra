@@ -27,7 +27,7 @@ class Engine:
 
     def find_agent_for_task(self, task: Task) -> Agent:
         for agent in self.agents:
-            if agent.capabilities.contains(task.requirements):
+            if hasattr(agent.capabilities, 'contains') and callable(agent.capabilities.contains) and agent.capabilities.contains(task.requirements):
                 return agent
         return None
 
@@ -63,12 +63,13 @@ class Engine:
 
 
 class Agent:
-    def __init__(self, id: str, capabilities: str):
+    def __init__(self, id: str, capabilities: object):
         self.id = id
         self.capabilities = capabilities
         self.tasks = []
 
     def execute_task(self, task: Task):
+        self.logger = logging.getLogger(__name__)
         self.logger.info(f'Executing task {task.id} on agent {self.id}')
         try:
             task.status = 'executing'
@@ -82,5 +83,6 @@ class Agent:
             raise TaskException(f'Task {task.id} failed with error {e}')
 
     def cancel_task(self, task: Task):
+        self.logger = logging.getLogger(__name__)
         self.logger.info(f'Cancelling task {task.id} on agent {self.id}')
         task.status = 'cancelled'
