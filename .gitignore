@@ -1,0 +1,1 @@
+__pycache__/\n*.pyc\n.env\nlogs/\n*.log\n*.sqlite\n*.db\n*.bak\n*.swp\n.vscode\n.envs\n*.egg-info\n*.whl\n*.lock\ncoverage/\nhtmlcov/\n*.coverage\nbuild/\ndebug/\n*.tmp\n*.DS_Store
