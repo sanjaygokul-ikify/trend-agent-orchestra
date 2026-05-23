@@ -5,8 +5,8 @@ from .exceptions import TaskException
 
 
 class Engine:
-    def __init__(self, agents: List[Agent]):
-        self.agents = agents
+    def __init__(self, agents: List[Agent] = None):
+        self.agents = agents if agents is not None else []
         self.tasks = {}
         self.logger = logging.getLogger(__name__)
         logging.basicConfig(level=logging.INFO)
