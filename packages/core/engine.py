@@ -25,12 +25,6 @@ class Engine:
             self.logger.warning(f'No suitable agent found for task {task.id}')
             raise TaskException(f'Task {task.id} cannot be allocated')
 
-    def find_agent_for_task(self, task: Task) -> Agent:
-        for agent in self.agents:
-            if hasattr(agent.capabilities, 'contains') and callable(agent.capabilities.contains) and agent.capabilities.contains(task.requirements):
-                return agent
-        return None
-
     def execute_task(self, task: Task):
         agent = self.find_agent_for_task(task)
         if agent:
@@ -60,6 +54,24 @@ class Engine:
     def update_task_status(self, task: Task):
         self.logger.info(f'Updating task {task.id} status to {task.status}')
         self.tasks[task.id].status = task.status
+
+    def find_agent_for_task(self, task: Task) -> Agent:
+        for agent in self.agents:
+            if hasattr(agent.capabilities, 'contains') and callable(agent.capabilities.contains) and agent.capabilities.contains(task.requirements):
+                return agent
+        return None
+
+        # added missing type annotation for Task status attribute
+    def create_task(self, id: str, priority: str, requirements: str, status: str = 'pending') -> Task:
+        return Task(id, priority, requirements, status)
+
+
+class Task:
+    def __init__(self, id: str, priority: str, requirements: str, status: str = 'pending'):
+        self.id = id
+        self.priority = priority
+        self.requirements = requirements
+        self.status = status
 
 
 class Agent:
