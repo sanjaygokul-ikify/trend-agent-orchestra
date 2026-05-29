@@ -26,3 +26,17 @@ class TrendAgent:
         self.logger.info('Stopping trend agent')
         # implement trend agent stop logic here
         self.logger.info('Trend agent stopped')
+
+class Task:
+    def __init__(self, id: str, priority: str, requirements: str, status: str = 'pending'):
+        self.id = id
+        self.priority = priority
+        self.requirements = requirements
+        self.status = status
+
+
+class Agent:
+    def __init__(self, id: str, capabilities: object):
+        self.id = id
+        self.capabilities = capabilities
+        self.tasks: List[Task] = []  # Added type annotation for self.tasks
