@@ -61,7 +61,7 @@ class Engine:
                 return agent
         return None
 
-        # added missing type annotation for Task status attribute
+    # Fix: added type annotation for Task status attribute
     def create_task(self, id: str, priority: str, requirements: str, status: str = 'pending') -> Task:
         return Task(id, priority, requirements, status)
 
@@ -71,14 +71,14 @@ class Task:
         self.id = id
         self.priority = priority
         self.requirements = requirements
-        self.status = status
+        self.status: str = status  # Add type annotation for status
 
 
 class Agent:
     def __init__(self, id: str, capabilities: object):
         self.id = id
         self.capabilities = capabilities
-        self.tasks = []
+        self.tasks: List[Task] = []
 
     def execute_task(self, task: Task):
         self.logger = logging.getLogger(__name__)
