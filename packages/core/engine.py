@@ -78,7 +78,7 @@ class Agent:
     def __init__(self, id: str, capabilities: object):
         self.id = id
         self.capabilities = capabilities
-        self.tasks: List[Task] = []
+        self.tasks: List[Task] = []  # Added type annotation for self.tasks
 
     def execute_task(self, task: Task):
         self.logger = logging.getLogger(__name__)
@@ -98,3 +98,5 @@ class Agent:
         self.logger = logging.getLogger(__name__)
         self.logger.info(f'Cancelling task {task.id} on agent {self.id}')
         task.status = 'cancelled'
+
+  
