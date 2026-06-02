@@ -15,6 +15,8 @@ class Executor:
                 self.engine.ingest_task(task)
             except Exception as e:
                 logging.error(f'Task {task.id} cannot be allocated: {e}')
+            finally:
+                self.engine.update_task_status(task)
 
     def run(self):
         self.engine.run()
