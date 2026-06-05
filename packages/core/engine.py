@@ -65,38 +65,9 @@ class Engine:
     def create_task(self, id: str, priority: str, requirements: str, status: str = 'pending') -> Task:
         return Task(id, priority, requirements, status)
 
-
-class Task:
-    def __init__(self, id: str, priority: str, requirements: str, status: str = 'pending'):
-        self.id = id
-        self.priority = priority
-        self.requirements = requirements
-        self.status: str = status  # Add type annotation for status
-
-
-class Agent:
-    def __init__(self, id: str, capabilities: object):
-        self.id = id
-        self.capabilities = capabilities
-        self.tasks: List[Task] = []  # Added type annotation for self.tasks
-
-    def execute_task(self, task: Task):
-        self.logger = logging.getLogger(__name__)
-        self.logger.info(f'Executing task {task.id} on agent {self.id}')
-        try:
-            task.status = 'executing'
-            # Simulate task execution
-            import time
-            time.sleep(2)
-            task.status = 'completed'
-        except Exception as e:
-            task.status = 'failed'
-            self.logger.error(f'Task {task.id} failed with error {e}')
-            raise TaskException(f'Task {task.id} failed with error {e}')
-
-    def cancel_task(self, task: Task):
-        self.logger = logging.getLogger(__name__)
-        self.logger.info(f'Cancelling task {task.id} on agent {self.id}')
-        task.status = 'cancelled'
-
-  
+    def run(self):
+        for task in self.tasks.values():
+            try:
+                self.execute_task(task)
+            except TaskException as e:
+                self.logger.error(f'Task {task.id} failed with error {e}')
