@@ -10,8 +10,6 @@ class TrendAgentWarning(Warning):
         self.message = message
         super().__init__(message)
 
-import logging
-
 class TrendAgent:
     def __init__(self, config: Dict[str, str]):
         self.config = config
@@ -40,3 +38,5 @@ class Agent:
         self.id = id
         self.capabilities = capabilities
         self.tasks: List[Task] = []  # Added type annotation for self.tasks
+        self.execute_task = None  # Added type annotation for execute_task
+        self.cancel_task = None  # Added type annotation for cancel_task
