@@ -61,7 +61,6 @@ class Engine:
                 return agent
         return None
 
-    # Fix: added type annotation for Task status attribute
     def create_task(self, id: str, priority: str, requirements: str, status: str = 'pending') -> Task:
         return Task(id, priority, requirements, status)
 
@@ -71,3 +70,6 @@ class Engine:
                 self.execute_task(task)
             except TaskException as e:
                 self.logger.error(f'Task {task.id} failed with error {e}')
+
+    def add_agent(self, agent: Agent):
+        self.agents.append(agent)
