@@ -19,4 +19,8 @@ class Executor:
                 self.engine.update_task_status(task)
 
     def run(self):
-        self.engine.run()
+        for task in self.engine.tasks.values():
+            try:
+                self.engine.execute_task(task)
+            except TaskException as e:
+                logging.error(f'Task {task.id} failed with error {e}')
