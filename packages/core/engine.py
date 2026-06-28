@@ -14,7 +14,11 @@ class Engine:
     def ingest_task(self, task: Task):
         self.logger.info(f'Ingesting task {task.id} with priority {task.priority}')
         self.tasks[task.id] = task
-        self.allocate_task(task)
+        try:
+            self.allocate_task(task)
+        except Exception as e:
+            self.logger.error(f'Error allocating task {task.id}: {e}')
+            raise TaskException(f'Task {task.id} cannot be allocated')
 
     def allocate_task(self, task: Task):
         agent = self.find_agent_for_task(task)
@@ -28,8 +32,8 @@ class Engine:
     def execute_task(self, task: Task):
         agent = self.find_agent_for_task(task)
         if agent:
-            self.logger.info(f'Executing task {task.id} on agent {agent.id}')
             try:
+                self.logger.info(f'Executing task {task.id} on agent {agent.id}')
                 task.status = 'executing'
                 agent.execute_task(task)
                 task.status = 'completed'
