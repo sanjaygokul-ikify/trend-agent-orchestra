@@ -18,7 +18,7 @@ class Engine:
             self.allocate_task(task)
         except Exception as e:
             self.logger.error(f'Error allocating task {task.id}: {e}')
-            raise TaskException(f'Task {task.id} cannot be allocated')
+            raise TaskException(f'Task {task.id} cannot be allocated') from e
 
     def allocate_task(self, task: Task):
         agent = self.find_agent_for_task(task)
@@ -40,7 +40,7 @@ class Engine:
             except Exception as e:
                 task.status = 'failed'
                 self.logger.error(f'Task {task.id} failed with error {e}')
-                raise TaskException(f'Task {task.id} failed with error {e}')
+                raise TaskException(f'Task {task.id} failed with error {e}') from e
         else:
             self.logger.warning(f'No suitable agent found for task {task.id}')
             raise TaskException(f'Task {task.id} cannot be executed')
