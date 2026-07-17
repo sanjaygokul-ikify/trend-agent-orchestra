@@ -61,7 +61,7 @@ class Engine:
 
     def find_agent_for_task(self, task: Task) -> Agent:
         for agent in self.agents:
-            if hasattr(agent.capabilities, 'contains') and callable(agent.capabilities.contains) and agent.capabilities.contains(task.requirements):
+            if agent and hasattr(agent.capabilities, 'contains') and callable(agent.capabilities.contains) and agent.capabilities.contains(task.requirements):
                 return agent
         return None
 
