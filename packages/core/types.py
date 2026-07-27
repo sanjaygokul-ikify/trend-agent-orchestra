@@ -34,17 +34,9 @@ class Task:
 
 
 class Agent:
-    def __init__(self, id: str, capabilities: object):
+    def __init__(self, id: str, capabilities: object, execute_task: callable = None, cancel_task: callable = None) -> None:
         self.id = id
         self.capabilities = capabilities
-        self.tasks: List[Task] = []  # Added type annotation for self.tasks
-        self.execute_task = None  # Added type annotation for execute_task
-        self.cancel_task = None  # Added type annotation for cancel_task
-
-    def execute_task(self, task: Task) -> None:
-        # Added type annotation for execute_task
-        pass
-
-    def cancel_task(self, task: Task) -> None:
-        # Added type annotation for cancel_task
-        pass
+        self.tasks: List[Task] = []
+        self.execute_task = execute_task
+        self.cancel_task = cancel_task
