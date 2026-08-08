@@ -5,10 +5,10 @@ from packaging import version
 from packages.core.engine import Engine
 
 class Executor:
-    def __init__(self, agents: List[Agent]):
+    def __init__(self, agents: List['Agent']):
         self.engine = Engine(agents)
 
-    def execute_tasks(self, tasks: List[Task]):
+    def execute_tasks(self, tasks: List['Task']):
         logging.basicConfig(level=logging.INFO)
         for task in tasks:
             try:
